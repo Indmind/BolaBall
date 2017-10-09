@@ -22,6 +22,15 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown("r"))
+        {
+            stopMove();
+            transform.position = new Vector3(0, 2.5f, 0);
+        }
+    }
+
     private void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -34,8 +43,7 @@ public class PlayerController : MonoBehaviour {
 
     public void SetPositionFromCheckpoint()
     {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        stopMove();
         transform.position = checkpoint;
     }
 
@@ -49,7 +57,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (other.CompareTag("finish"))
         {
-            CheckpointText.text = "You Win!! Press 'space' to restart or 'ALT + f4' to exit";
+            CheckpointText.text = "You Win!! Press 'r' to restart or 'ALT + f4' to exit";
             checkpoint = other.transform.position;
             other.GetComponent<AudioSource>().Play();
         }
@@ -61,5 +69,11 @@ public class PlayerController : MonoBehaviour {
         {
             CheckpointText.text = "";
         }
+    }
+
+    void stopMove()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 }
