@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController1 : MonoBehaviour {
 
     [HideInInspector]
     public float life;
@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour {
 
     private void Start()
     {
-        isWin = false;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -37,7 +36,7 @@ public class PlayerController : MonoBehaviour {
         {
             SceneManager.LoadScene(firstLevel);
         }
-        if (isWin && Input.GetKeyDown("n"))
+        if (isWin && (Input.GetKeyDown("n") || Input.GetKeyDown("2")))
         {
             SceneManager.LoadScene(secondLevel);
         }
@@ -67,14 +66,14 @@ public class PlayerController : MonoBehaviour {
     {
         if (other.CompareTag("checkpoint"))
         {
-            CheckpointText.text = "Checkpoint, press 'c' to back to checkpoin";
+            CheckpointText.text = "Checkpoint, press 'c' to back to checkpoint";
             checkpoint = other.transform.position;
             other.GetComponent<AudioSource>().Play();
         }
         if (other.CompareTag("finish"))
         {
             isWin = true;
-            CheckpointText.text = "You Win!! Press 'r' to restart or '1' to restart from lvl 1 or 'ALT + f4' to exit";
+            CheckpointText.text = "You Win!! Press 'r' to restart or press 'n' to go lvl 2 or 'ALT + f4' to exit";
             checkpoint = other.transform.position;
             other.GetComponent<AudioSource>().Play();
         }
